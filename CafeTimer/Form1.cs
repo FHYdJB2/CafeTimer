@@ -36,22 +36,19 @@ namespace CafeTimer
                 dropComboBox.Items.Add(i);
             }
         }
-        //初期設定
+        //初期設定メソッド
         private void Add()
         {
             //テキストチェンジドイベントを削除
-            firstDrinkText.TextChanged -= FirstDrinkChanged;
-            drink200ComboBox.TextChanged -= SecondDrinkChanged;
-            drink300ComboBox.TextChanged -= SecondDrinkChanged;
-            drink400ComboBox.TextChanged -= SecondDrinkChanged;
-            drink600ComboBox.TextChanged -= SecondDrinkChanged;
-
+            firstDrinkText.TextChanged -= FirstDrinkTextChanged;
+            drink200ComboBox.TextChanged -= DrinkChanged;
+            drink300ComboBox.TextChanged -= DrinkChanged;
+            drink400ComboBox.TextChanged -= DrinkChanged;
+            drink600ComboBox.TextChanged -= DrinkChanged;
             //初期値
             chargeText.Text = "0";
             drinkTextBox.Text = "0";
             firstDrinkText.Text = "0";
-
-
             //200～600のドリンク
             drink200ComboBox.Text = "0";
             drink300ComboBox.Text = "0";
@@ -59,11 +56,11 @@ namespace CafeTimer
             drink600ComboBox.Text = "0";
             dropComboBox.Text = "0";
             //テキストチェンジドイベントを追加
-            drink200ComboBox.TextChanged += SecondDrinkChanged;
-            drink300ComboBox.TextChanged += SecondDrinkChanged;
-            drink400ComboBox.TextChanged += SecondDrinkChanged;
-            drink600ComboBox.TextChanged += SecondDrinkChanged;
-
+            firstDrinkText.TextChanged += FirstDrinkTextChanged;
+            drink200ComboBox.TextChanged += DrinkChanged;
+            drink300ComboBox.TextChanged += DrinkChanged;
+            drink400ComboBox.TextChanged += DrinkChanged;
+            drink600ComboBox.TextChanged += DrinkChanged;
             //テキスト表示位置を右詰めに変更
             stayTime.TextAlign = HorizontalAlignment.Right;
             chargeText.TextAlign = HorizontalAlignment.Right;
@@ -72,7 +69,6 @@ namespace CafeTimer
             othersTextBox.TextAlign = HorizontalAlignment.Right;
             totalText.TextAlign = HorizontalAlignment.Right;
             taxText.TextAlign = HorizontalAlignment.Right;
-
             //ボタンのテキスト表示位置を真ん中に変更
             TimeCalcBtn.TextAlign = ContentAlignment.MiddleCenter;
             DisplayMoneyBtn.TextAlign = ContentAlignment.MiddleCenter;
@@ -85,7 +81,7 @@ namespace CafeTimer
             TimeSpan diff = outTime - inTime; //滞在時間
             stayTime.Text = diff.ToString().Remove(5, 3);
 
-            //滞在時間からチャージ料金を計算するメソッド
+            //滞在時間からチャージ料金を計算
             double charge = diff.TotalMinutes; //チャージ時間
             double chargeMoney = (charge / 10) * 100; //チャージ料金
             chargeText.Text = chargeMoney.ToString();
@@ -105,57 +101,57 @@ namespace CafeTimer
             {
                 firstDrinkText.Text = "600";
             }
-            /*
-            if (firstDrinkComboBox.Text == "0")
-            {
-                double aaa = double.Parse(drinkTextBox.Text);
-                double bbb = double.Parse(firstDrinkText.Text);
-                double ccc = aaa + bbb;
-                drinkTextBox.Text = ccc.ToString();
-            }
-            else if (firstDrinkComboBox.Text!="0")
-            {
-                double ccc = 0;
-                ccc-=double.Parse(firstDrinkText.Text);
-                double aaa = double.Parse(drinkTextBox.Text);
-                double bbb = double.Parse(firstDrinkText.Text);
-                 ccc += aaa + bbb;
-                drinkTextBox.Text = ccc.ToString();
-            }
-            */
-            
         }
-
-
-        //しずくを変更した際に値段を表示させるメソッド
-        private void OthersChanged(object sender, EventArgs e)
+        //一杯目のドリンクを変更した際に、ドリンクの値段を変更するメソッド
+        private void FirstDrinkTextChanged(object sender, EventArgs e)
         {
-            double aaa = double.Parse(dropComboBox.Text) * 1000;
-            othersTextBox.Text = aaa.ToString();
-        }
-
-        //ドリンクを変更した際に値段を表示させるメソッド
-        private void DrinkChanged(object sender, EventArgs e)
-        {
-
-        }
-        //ドリンクの計算メソッド
-        private void DrinkCalc()
-        {
+            //二杯目以降のドリンクの変数を宣言
             double dr200 = double.Parse(drink200ComboBox.Text) * 200;
             double dr300 = double.Parse(drink300ComboBox.Text) * 300;
             double dr400 = double.Parse(drink400ComboBox.Text) * 400;
             double dr600 = double.Parse(drink600ComboBox.Text) * 600;
-            //合計金額を表示するメソッド
+            //合計金額を表示
             double drink = int.Parse(firstDrinkText.Text);
             double totalDrink = drink + dr200 + dr300 + dr400 + dr600;
             //ドリンクの値段を表示
             drinkTextBox.Text = totalDrink.ToString();
         }
-
+        //しずくを変更した際に値段を表示させるメソッド
+        private void OthersChanged(object sender, EventArgs e)
+        {
+            double drop = double.Parse(dropComboBox.Text) * 1000;
+            othersTextBox.Text = drop.ToString();
+        }
+        //ドリンクを変更した際に値段を表示させるメソッド
+        private void DrinkChanged(object sender, EventArgs e)
+        {
+            //二杯目以降のドリンクの変数を宣言
+            double dr200 = double.Parse(drink200ComboBox.Text) * 200;
+            double dr300 = double.Parse(drink300ComboBox.Text) * 300;
+            double dr400 = double.Parse(drink400ComboBox.Text) * 400;
+            double dr600 = double.Parse(drink600ComboBox.Text) * 600;
+            //ドリンクを変更した際に合計を表示
+            double totalDrink = double.Parse(firstDrinkText.Text) + dr200 + dr300 + dr400 + dr600;
+            drinkTextBox.Text = totalDrink.ToString();
+        }
+        //ドリンクの計算メソッド
+        private void DrinkCalc()
+        {
+            //二杯目以降のドリンクの変数を宣言
+            double dr200 = double.Parse(drink200ComboBox.Text) * 200;
+            double dr300 = double.Parse(drink300ComboBox.Text) * 300;
+            double dr400 = double.Parse(drink400ComboBox.Text) * 400;
+            double dr600 = double.Parse(drink600ComboBox.Text) * 600;
+            //合計金額を表示
+            double drink = int.Parse(firstDrinkText.Text);
+            double totalDrink = drink + dr200 + dr300 + dr400 + dr600;
+            //ドリンクの値段を表示
+            drinkTextBox.Text = totalDrink.ToString();
+        }
         //消費税の計算メソッド
         private void Calc()
         {
+            //charge,drink,dropの料金の変数を作成
             double chargeMoney = double.Parse(chargeText.Text);
             double totalDrink = double.Parse(drinkTextBox.Text);
             double drop = double.Parse(othersTextBox.Text);
@@ -165,24 +161,31 @@ namespace CafeTimer
             totalText.Text = totalMoney.ToString();
             taxText.Text = taxMoney.ToString();
         }
-
         //滞在時間を計算するメソッド
         private void TimeCalcClicked(object sender, EventArgs e)
         {
             DateTime inTime = inTimePicker.Value; //in時間
             DateTime outTime = outTimePicker.Value; //out時間
             TimeSpan diff = outTime - inTime; //滞在時間
-            stayTime.Text = diff.ToString().Remove(5, 3);
-
-            //滞在時間からチャージ料金を計算するメソッド
-            double charge = diff.TotalMinutes; //チャージ時間
-            double chargeMoney = (charge / 10) * 100; //チャージ料金
-            chargeText.Text = chargeMoney.ToString();
+            string strDiff = diff.ToString();
+            //滞在時間がマイナスなら時間を表示しない
+            if (strDiff[0] == '-')
+            {
+                stayTime.Text = "00:00";
+            }
+            else
+            {
+                stayTime.Text = strDiff.Remove(5, 3);
+                //滞在時間からチャージ料金を計算
+                double charge = diff.TotalMinutes; //チャージ時間
+                double chargeMoney = (charge / 10) * 100; //チャージ料金
+                chargeText.Text = chargeMoney.ToString();
+            }
         }
-
         //ボタンクリック時の金額を表示
         private void DisplayMoneyClicked(object sender, EventArgs e)
         {
+            //一杯目のドリンクが選択されていないときはエラーを表示
             if (firstDrinkComboBox.SelectedItem == null)
             {
                 MessageBox.Show("一杯目を選択してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -193,18 +196,6 @@ namespace CafeTimer
                 TimeCalc();
                 Calc();
             }
-        }
-
-        private void SecondDrinkChanged(object sender, EventArgs e)
-        {
-
-            double dr200 = double.Parse(drink200ComboBox.Text) * 200;
-            double dr300 = double.Parse(drink300ComboBox.Text) * 300;
-            double dr400 = double.Parse(drink400ComboBox.Text) * 400;
-            double dr600 = double.Parse(drink600ComboBox.Text) * 600;
-
-            double totalDrink = double.Parse(firstDrinkText.Text)+ dr200+dr300+dr400+dr600;
-            drinkTextBox.Text = totalDrink.ToString();
         }
     }
 }

@@ -184,6 +184,7 @@
             this.firstDrinkText.Name = "firstDrinkText";
             this.firstDrinkText.Size = new System.Drawing.Size(100, 22);
             this.firstDrinkText.TabIndex = 13;
+            this.firstDrinkText.TextChanged += new System.EventHandler(this.FirstDrinkTextChanged);
             // 
             // label5
             // 
@@ -262,7 +263,7 @@
             this.drink200ComboBox.Name = "drink200ComboBox";
             this.drink200ComboBox.Size = new System.Drawing.Size(56, 23);
             this.drink200ComboBox.TabIndex = 23;
-            this.drink200ComboBox.TextChanged += new System.EventHandler(this.SecondDrinkChanged);
+            this.drink200ComboBox.TextChanged += new System.EventHandler(this.DrinkChanged);
             // 
             // drink300ComboBox
             // 
@@ -271,7 +272,7 @@
             this.drink300ComboBox.Name = "drink300ComboBox";
             this.drink300ComboBox.Size = new System.Drawing.Size(56, 23);
             this.drink300ComboBox.TabIndex = 24;
-            this.drink300ComboBox.TextChanged += new System.EventHandler(this.SecondDrinkChanged);
+            this.drink300ComboBox.TextChanged += new System.EventHandler(this.DrinkChanged);
             // 
             // drink400ComboBox
             // 
@@ -280,6 +281,7 @@
             this.drink400ComboBox.Name = "drink400ComboBox";
             this.drink400ComboBox.Size = new System.Drawing.Size(56, 23);
             this.drink400ComboBox.TabIndex = 25;
+            this.drink400ComboBox.TextChanged += new System.EventHandler(this.DrinkChanged);
             // 
             // drink600ComboBox
             // 
@@ -288,6 +290,7 @@
             this.drink600ComboBox.Name = "drink600ComboBox";
             this.drink600ComboBox.Size = new System.Drawing.Size(56, 23);
             this.drink600ComboBox.TabIndex = 26;
+            this.drink600ComboBox.TextChanged += new System.EventHandler(this.DrinkChanged);
             // 
             // totalText
             // 
